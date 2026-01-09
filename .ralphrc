@@ -1,6 +1,6 @@
 # Ralph Configuration
-# Set which AI to use: cld, cdx, or gmn
-AI_COMMAND=cld
+# Set which AI to use: claude, codex, or gemini
+AI_COMMAND=claude
 
 # PRD file location
 PRD_FILE=PRD.md

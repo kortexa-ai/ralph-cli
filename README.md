@@ -3,33 +3,25 @@
 A local harness for running Ralph (AI coding agent loops) with multiple AI backends.
 
 Supports the following AI CLIs:
-- **cld** - Claude Code
-- **cdx** - OpenAI Codex CLI
-- **gmn** - Google Gemini CLI
+- **claude** - Claude Code
+- **codex** - OpenAI Codex CLI
+- **gemini** - Google Gemini CLI
 
 Based on the Ralph technique by Matt Pocock. See [RALPH.md](./RALPH.md) for the full guide.
 
 ## Prerequisites
 
-You should have your AI CLI tools installed and aliased as `cld`, `cdx`, and `gmn`.
+You should have the following AI CLI tools installed:
+- `claude` - Anthropic's Claude Code CLI
+- `codex` - OpenAI Codex CLI
+- `gemini` - Google Gemini CLI
 
-**Important**: Your aliases should already be configured with the proper permissions for auto-approval and non-interactive mode. The Ralph scripts call your aliases directly without adding any flags.
+The scripts automatically configure them with appropriate flags:
+- **claude**: `--dangerously-skip-permissions -p` (print mode)
+- **gemini**: `--yolo`
+- **codex**: `exec --dangerously-bypass-approvals-and-sandbox --enable web_search_request`
 
-Example alias configurations:
-```bash
-# In ~/.bashrc or ~/.zshrc
-
-# Claude Code with auto-approval
-alias cld='claude --permission-mode acceptEdits -p'
-
-# Gemini with auto-approval
-alias gmn='gemini --yolo'
-
-# Codex with auto-approval
-alias cdx='codex exec --full-auto'
-```
-
-Adjust your aliases based on your preferred settings and security requirements.
+No additional configuration needed - the scripts handle everything.
 
 ## Quick Start
 
@@ -83,7 +75,7 @@ Edit `.ralphrc` in your project or in `/Users/francip/src/ralph-cli/.ralphrc` to
 
 ```bash
 # Ralph Configuration
-AI_COMMAND=cld           # cld, cdx, or gmn (your alias)
+AI_COMMAND=claude        # claude, codex, or gemini
 PRD_FILE=PRD.md
 PROGRESS_FILE=progress.txt
 ```
@@ -109,9 +101,9 @@ Run one iteration at a time to build intuition:
 ralph-once
 
 # Use specific AI
-ralph-once cld
-ralph-once cdx
-ralph-once gmn
+ralph-once claude
+ralph-once codex
+ralph-once gemini
 ```
 
 ### Multi-Iteration Mode (ralph)
@@ -122,12 +114,16 @@ Run multiple iterations automatically:
 # Use default AI, run 20 iterations
 ralph 20
 
-# Use specific AI
-ralph --ai cdx 10
-ralph --ai gmn 15
+# Use specific AI (cleaner syntax)
+ralph claude 20
+ralph codex 10
+ralph gemini 15
+
+# Or with --ai flag
+ralph --ai codex 10
 
 # Or via environment variable
-RALPH_AI=cdx ralph 10
+RALPH_AI=codex ralph 10
 ```
 
 The loop will:
@@ -240,7 +236,7 @@ Ralph is a simple loop:
 
 The AI decides what to work on - you just provide the PRD.
 
-**Note**: The scripts call your AI aliases directly (e.g., `$AI_COMMAND "prompt"`). Make sure your aliases are configured with the proper auto-approval flags before running Ralph.
+**Note**: The scripts use the AI CLIs directly with appropriate flags for auto-approval and non-interactive mode. No additional configuration needed.
 
 ## Customization
 
@@ -331,46 +327,73 @@ git config --global user.name "Your Name"
 git config --global user.email "your@email.com"
 ```
 
+### "command not found" errors
+
+Make sure you have the AI CLI tools installed:
+
+```bash
+# Check if installed
+which claude
+which codex
+which gemini
+```
+
+If not found, install them:
+- Claude: https://docs.anthropic.com/en/docs/claude-code
+- Codex: Follow OpenAI Codex installation instructions
+- Gemini: Follow Google Gemini CLI installation instructions
+
 ### AI doesn't execute properly
 
-The scripts call your aliases directly. Make sure your aliases work correctly:
+Test the commands manually:
 
 ```bash
-# Test your aliases
-cld "Hello, test prompt"
-gmn "Hello, test prompt"
-cdx "Hello, test prompt"
+# Test each AI
+claude --help
+codex --help
+gemini --help
 ```
 
-If your alias name differs from `cld`, `cdx`, or `gmn`, update `.ralphrc`:
-
-```bash
-# In .ralphrc
-AI_COMMAND=your-alias-name
-```
+The scripts use these exact command names. Make sure they're in your PATH.
 
 ## Advanced: Custom AI CLI
 
-To use a different AI CLI:
+To use a different AI CLI, you'll need to modify the scripts:
 
-1. **Create an alias** with the proper flags:
+1. **Add your AI to the case statements** in `ralph-once.sh` and `ralph.sh`:
 
 ```bash
-# In ~/.bashrc or ~/.zshrc
-alias myai='my-ai-tool --auto-approve --non-interactive'
+case $AI_COMMAND in
+  claude)
+    claude --dangerously-skip-permissions -p "$PROMPT"
+    ;;
+  gemini)
+    gemini --yolo "$PROMPT"
+    ;;
+  codex)
+    codex exec --dangerously-bypass-approvals-and-sandbox --enable web_search_request "$PROMPT"
+    ;;
+  myai)
+    myai --auto-approve --non-interactive "$PROMPT"
+    ;;
+  *)
+    echo "Unknown AI command: $AI_COMMAND"
+    exit 1
+    ;;
+esac
 ```
 
-2. **Update `.ralphrc`** with your alias name:
+2. **Update `.ralphrc`** with your AI command name:
 
 ```bash
 # In .ralphrc
 AI_COMMAND=myai
 ```
 
-Your custom AI alias should:
+Your custom AI should:
 - Auto-approve code edits and commands
 - Run in non-interactive mode and output to stdout
-- Support reading files with `@filename` syntax (or modify the prompts in the scripts)
+- Support reading files with `@filename` syntax
 
 ## Credits
 
