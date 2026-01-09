@@ -397,9 +397,9 @@ Your custom AI should:
 
 ## Credits
 
-Ralph technique by [Matt Pocock](https://x.com/mattpocockuk)
+Ralph technique by [Geoffrey Huntley](https://ghuntley.com/ralph/)
 
-Original guide: https://x.com/mattpocockuk/status/2009276031622918474
+implementation based on [Matt Pocock guide](https://x.com/mattpocockuk/status/2009276031622918474)
 
 ## License
 
