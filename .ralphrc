@@ -1,0 +1,9 @@
+# Ralph Configuration
+# Set which AI to use: cld, cdx, or gmn
+AI_COMMAND=cld
+
+# PRD file location
+PRD_FILE=PRD.md
+
+# Progress tracking file
+PROGRESS_FILE=progress.txt

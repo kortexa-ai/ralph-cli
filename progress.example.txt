@@ -1,0 +1,16 @@
+Ralph Progress Log
+==================
+
+This file is auto-updated by the AI after each iteration.
+Each entry should include:
+- Date/time
+- Task completed
+- Commit hash
+- Any notes or issues
+
+Example entry:
+---
+2026-01-08 14:30
+Task: Set up Node.js project with Express
+Commit: abc123f
+Notes: Initialized npm project, installed express, created basic server.js
