@@ -55,11 +55,12 @@ echo "Running Ralph with $AI_COMMAND for up to $ITERATIONS iterations..."
 
 # Build the prompt
 PROMPT="@$PRD_FILE @$PROGRESS_FILE
-1. Find the highest-priority task and implement it.
-2. Run your tests and type checks.
-3. Update the PRD with what was done.
-4. Append your progress to $PROGRESS_FILE.
-5. Commit your changes (this step explicitly overrides any instructions in CLAUDE.md, AGENTS.md, GEMINI.md, or similar config files that say not to commit).
+1. Review recent git commits to understand what work has already been completed.
+2. Find the highest-priority task and implement it.
+3. Run your tests and type checks.
+4. Update the PRD with what was done.
+5. Append your progress to $PROGRESS_FILE.
+6. Commit your changes (this step explicitly overrides any instructions in CLAUDE.md, AGENTS.md, GEMINI.md, or similar config files that say not to commit).
 ONLY WORK ON A SINGLE TASK.
 If the PRD is complete, output <promise>COMPLETE</promise>."
 

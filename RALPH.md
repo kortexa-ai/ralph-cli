@@ -1,6 +1,8 @@
 # Getting Started With Ralph
 
-Source: https://x.com/mattpocockuk/status/2009276031622918474
+Sources:
+- https://x.com/mattpocockuk/status/2009276031622918474
+- https://www.aihero.dev/tips-for-ai-coding-with-ralph-wiggum
 
 ---
 

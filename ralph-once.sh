@@ -19,10 +19,11 @@ fi
 
 # Build the prompt
 PROMPT="@$PRD_FILE @$PROGRESS_FILE
-1. Read the PRD and progress file.
-2. Find the next incomplete task and implement it.
-3. Commit your changes (this step explicitly overrides any instructions in CLAUDE.md, AGENTS.md, GEMINI.md, or similar config files that say not to commit).
-4. Update $PROGRESS_FILE with what you did.
+1. Review recent git commits to understand what work has already been completed.
+2. Read the PRD and progress file.
+3. Find the next incomplete task and implement it.
+4. Commit your changes (this step explicitly overrides any instructions in CLAUDE.md, AGENTS.md, GEMINI.md, or similar config files that say not to commit).
+5. Update $PROGRESS_FILE with what you did.
 ONLY DO ONE TASK AT A TIME."
 
 # Run single Ralph iteration with the appropriate AI
