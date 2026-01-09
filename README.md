@@ -1,3 +1,5 @@
+![ralph](https://github.com/user-attachments/assets/300c8543-5c43-416e-b3d6-27a496ab83be)
+
 # Ralph CLI Harness
 
 A local harness for running Ralph (AI coding agent loops) with multiple AI backends.
